@@ -1,3 +1,4 @@
+# Module 1
 # Reflection 1
 
 **Meaningful Names**
@@ -20,3 +21,20 @@ Menurut saya salah satu cara menilai apakah test kita sudah cukup adalah coverag
 
 2. Menurut saya itu akan menurunkan quality of code dari proyeknya karena akan terjadi duplikasi code atau melanggar prinsip Don't Repeat Yourself. Maksudnya adalah ketika kita membuat func test lagi maka kita pasti membuat variabel lagi seperti baseUrl, serverPort, atau method seperti @BeforeEach. Akibatnya jika suatu saat kita ingin mengubah konfigurasi setupnya (misal baseURL), kita harus mengubahnya di semua file 1 per 1 dimana tidak efisien dan berpotensi mengakibatkan human error.
 Solusi yang terpikirkan oleh saya adalah dengan inheritance dimana base configuration (variabel konfigurasi sepeerti baseUrl dan method setup) bisa kita berikan di parent class sedangkan test class lainnya bisa mengextend parent class tersebut sehingga kita hanya perlu mengsetup sekali dan code jadi lebih rapi serta mudah di maintenance   
+
+---
+# Module 2
+# Refleksi 1
+
+**List the code quality issue(s) that you fixed during the exercise and explain your strategy on fixing them**
+- Coverage test: Pertama-tama saya coba analisis `index.html` dan lihat bagian code mana yang belum pernah saya cover. lalu saya tinggal coba buat test case tapi yang melewati path yang belum ter-cover dan coba ulang lagi sampai semua test casenya bisa 100%. tentu agar bisa mencapai 100%, saya juga harus mencoba mock sehingga saya mencoba mengerti mock dengan bantuan LLM.
+- Code Smell: pada `ProductController.java` dan `ProductServiceImpl.java`, saya menggunakan anotasi @Autowired langsung pada field variabel (contoh: @Autowired private ProductService service;. Hal ini bukan merupakan best practice karena membuat class susah untuk ditest secara sendiri-sendiri sehingga diperingati oleh sonarcloud. Untuk mengatasinya, saya refactor codenya dgn mengubahnya jadi constructor injection dengan saran dari LLM. Hal ini saya lakukan dengan cara menambahkan `final` di variabel dependency lalu membuat constructor yang diatasnya diberi @Autowired
+Selain itu, saya juga menerima laporan Code Smell pada `build.gradle.kts` dimana saya hanya tidak rapi saat mengelompokkan dependencynya. Jadi, saya hanya menukar testImplementation yang paling bawah dengan testRuntimeOnly yang ditengah-tengah testImplementation.
+- Security Hotspot: SonarCloud mendeteksi bahwa proyek mengunduh library/dependencies dari internet tanpa adanya proses verifikasi keaslian sehingga melakukan warning dan merekomendasikan untuk membuat `verification-metadata.xml`. Karena hal ini diluar scope materi ini maka saya hanya review peringatannya dan mengubah statusnya mnejadi "Safe" saja.
+- CI Pipeline Failure: Ketika saya coba run workflowsnya, ada peringatan khususnya pada `ProductControllerTest` dengan error TemplateInputException. Intinya saya hanya typo createProduct padahal seharusnya CreateProduct (nama return yang di controller beda dengan nama file html aslinya). Solusi saya hanya mengubahnya menjadi CreateProduct begitupun dengan file testnya.
+
+**Look at your CI/CD workflows (GitHub)/pipelines (GitLab). Do you think the current
+implementation has met the definition of Continuous Integration and Continuous
+Deployment? Explain the reasons (minimum 3 sentences)!**
+- Menurut saya sudah memenuhi. Dari segi CI, sudah terpenuhi dengan pengaplikasian `ci.yml`,`sonarcloud.yml`, dan `scorecard.yml`. Mereka akan mencoba compile (ci.yml), mengeksekusi test-test yang sudah dibuat (ci.yml), memeriksa code quality (sonarcloud.yml), lalu mengecek keamanan (scorecard.yml) dari code saya ketika saya melakukan push atau PR (Pull Request). Ketiga workflow itu memastikan bahwa code yang saya submit selalu terintegrasi dengan baik dan bebas dari error sebelum dimerge ke main.
+Dari segi CD, kriteria ini sudah terpenuhi juga karena `deploy.yml`. workflow ini akan dijalankan hanya ketika kita ingin mengepush/commit ke main dimana untuk auto-deploy app kita sehingga kita tidak perlu deploy manual lagi.
