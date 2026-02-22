@@ -13,14 +13,18 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
+    private final ProductService service;
+
     @Autowired
-    private ProductService service;
+    public ProductController(ProductService service){
+        this.service = service;
+    }
 
     @GetMapping("/create")
     public String createProductPage(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
-        return "createProduct";
+        return "CreateProduct";
     }
 
     @PostMapping("/create")
