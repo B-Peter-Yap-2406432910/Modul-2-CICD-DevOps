@@ -38,6 +38,19 @@ class ProductRepositoryTest {
     }
 
     @Test
+    void testCreateProductWithNullId() {
+        Product product = new Product();
+        product.setProductName("Sampo Cap Budi");
+        product.setProductQuantity(50);
+
+        Product savedProduct = productRepository.create(product);
+
+        assertNotNull(savedProduct.getProductId());
+        assertEquals("Sampo Cap Budi", savedProduct.getProductName());
+        assertEquals(50, savedProduct.getProductQuantity());
+    }
+
+    @Test
     void testFindAllIfEmpty() {
         Iterator<Product> productIterator = productRepository.findAll();
         assertFalse(productIterator.hasNext());
