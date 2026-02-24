@@ -94,3 +94,7 @@ tasks.jacocoTestReport {
         html.required = true
     }
 }
+
+tasks.getByName<Jar>("jar") {
+    enabled = false
+}
