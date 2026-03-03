@@ -46,10 +46,13 @@ Dari segi CD, kriteria ini sudah terpenuhi juga karena `deploy.yml`. workflow in
 - S (Single Responsibility Principle): Memindahkan CarController ke file khusus untuk class itu sendiri untuk mengimplementasikan SRP. dimana 1 file atau class khusus untuk controller masing-masing aspek saja.
 Lalu untuk pemasukan UUID juga saya pindahkan ke service rather than di repository karena tugas repository adalah hanya untuk menyimpan CRUD bukan untuk business logic. Saya juga mengubah edit pada  
 - O (Open-Close Principle): 
-
+- L (Liskov Substitution Principle): menghapus inheritance pada CarController terhadap ProductController karena Car tidak seharusnya mengimplementasikan method-method yang ada di Product.
+- I (Interface Segregation Principle): 
+- D (Dependency Inversion Principle): 
 
 *Extra (Clean Code):*
 - DRY (Don't Repeat Yourself): saya menghapus loop pada method update di CarRepository karena mengeloop lagi untuk mencari id Car padahal kita sudah memiliki function tersendiri untuk itu.
+- YAGNI (You Aren't Gonna Need It): saya menghapus atribut static int id pada CarRepository karena tampaknya kita tidak menggunakan id berupa angka tapi berupa UUID. karena tidak digunakan sama sekali maka saya hapus.
 
 **Explain the advantages of applying SOLID principles to your project with examples.**
 - lorem ipsum
