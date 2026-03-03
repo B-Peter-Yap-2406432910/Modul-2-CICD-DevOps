@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class ProductRepository {
+public class ProductRepository implements ProductRepositoryIntr{
     private List<Product> productData = new ArrayList<>();
     private HashMap<String,Product> productHashMap = new HashMap<>();
 

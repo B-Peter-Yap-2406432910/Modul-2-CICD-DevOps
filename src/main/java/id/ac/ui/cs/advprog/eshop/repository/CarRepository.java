@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class CarRepository {
+public class CarRepository implements CarRepositoryIntr{
     private List<Car> carData = new ArrayList<>();
 
     public Car create(Car car) {

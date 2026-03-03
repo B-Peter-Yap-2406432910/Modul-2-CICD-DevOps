@@ -45,9 +45,9 @@ Dari segi CD, kriteria ini sudah terpenuhi juga karena `deploy.yml`. workflow in
 **Explain what principles you apply to your project!**
 - S (Single Responsibility Principle): Memindahkan CarController ke file khusus untuk class itu sendiri untuk mengimplementasikan SRP. dimana 1 file atau class khusus untuk controller masing-masing aspek saja.
 Lalu untuk pemasukan UUID juga saya pindahkan ke service rather than di repository karena tugas repository adalah hanya untuk menyimpan CRUD bukan untuk business logic. Saya juga mengubah edit pada  
-- O (Open-Close Principle): 
+- O (Open-Close Principle): membuat interface untuk masing-masing ProductRepository dan CarRepository untuk memungkinkan adanya penambahan fitur jika ingin. misal kita ingin membuat database untuk data app ini, maka bisa langsung buat class baru saja yang mengimpelentasikan interface tersebut.
 - L (Liskov Substitution Principle): menghapus inheritance pada CarController terhadap ProductController karena Car tidak seharusnya mengimplementasikan method-method yang ada di Product.
-- I (Interface Segregation Principle): 
+- I (Interface Segregation Principle): membuat interface untuk repository dan juga menggunakan interface bawaan untuk service. Sehingga mencegah class untuk bergantung pada method yang tidak akan mereka pakai.
 - D (Dependency Inversion Principle): 
 
 *Extra (Clean Code):*
