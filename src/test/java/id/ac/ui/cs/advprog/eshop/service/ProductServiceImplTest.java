@@ -90,4 +90,17 @@ class ProductServiceImplTest {
         assertEquals(product.getProductId(), editedProduct.getProductId());
         verify(productRepository, times(1)).edit(product);
     }
+    @Test
+    void testCreateWithNullId() {
+        Product newProduct = new Product();
+        newProduct.setProductName("Kecap Cap Bango");
+        newProduct.setProductQuantity(20);
+
+        when(productRepository.create(newProduct)).thenReturn(newProduct);
+
+        Product savedProduct = productService.create(newProduct);
+
+        assertNotNull(savedProduct.getProductId());
+        verify(productRepository, times(1)).create(newProduct);
+    }
 }
