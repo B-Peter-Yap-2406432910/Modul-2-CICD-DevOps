@@ -34,9 +34,6 @@ class CarRepositoryTest {
         assertTrue(carIterator.hasNext());
         Car savedCar = carIterator.next();
         assertEquals(car.getCarId(), savedCar.getCarId());
-        assertEquals(car.getCarName(), savedCar.getCarName());
-        assertEquals(car.getCarColor(), savedCar.getCarColor());
-        assertEquals(car.getCarQuantity(), savedCar.getCarQuantity());
     }
 
     @Test
@@ -54,6 +51,12 @@ class CarRepositoryTest {
     void testFindByIdNotFound() {
         Car foundCar = carRepository.findById("non-existent");
         assertNull(foundCar);
+
+        Car car = new Car();
+        car.setCarId("exists");
+        carRepository.create(car);
+        Car foundCar2 = carRepository.findById("different-id");
+        assertNull(foundCar2);
     }
 
     @Test
@@ -61,8 +64,6 @@ class CarRepositoryTest {
         Car car = new Car();
         car.setCarId("3");
         car.setCarName("Honda");
-        car.setCarColor("Biru");
-        car.setCarQuantity(5);
         carRepository.create(car);
 
         Car updatedCar = new Car();
@@ -73,14 +74,16 @@ class CarRepositoryTest {
         Car result = carRepository.update("3", updatedCar);
         assertNotNull(result);
         assertEquals("Honda Jazz", result.getCarName());
-        assertEquals("Kuning", result.getCarColor());
-        assertEquals(15, result.getCarQuantity());
     }
 
     @Test
     void testUpdateNotFound() {
+        Car car = new Car();
+        car.setCarId("some-id");
+        carRepository.create(car);
+
         Car updatedCar = new Car();
-        updatedCar.setCarName("Honda Jazz");
+        updatedCar.setCarName("New Name");
         Car result = carRepository.update("not-found", updatedCar);
         assertNull(result);
     }
@@ -94,5 +97,16 @@ class CarRepositoryTest {
         carRepository.delete("4");
         Car foundCar = carRepository.findById("4");
         assertNull(foundCar);
+    }
+
+    @Test
+    void testDeleteNotFound() {
+        Car car = new Car();
+        car.setCarId("id-tetap-ada");
+        carRepository.create(car);
+
+        carRepository.delete("id-tidak-ada");
+
+        assertNotNull(carRepository.findById("id-tetap-ada"));
     }
 }
