@@ -48,14 +48,14 @@ Lalu untuk pemasukan UUID juga saya pindahkan ke service rather than di reposito
 - O (Open-Close Principle): membuat interface untuk masing-masing ProductRepository dan CarRepository untuk memungkinkan adanya penambahan fitur jika ingin. misal kita ingin membuat database untuk data app ini, maka bisa langsung buat class baru saja yang mengimpelentasikan interface tersebut.
 - L (Liskov Substitution Principle): menghapus inheritance pada CarController terhadap ProductController karena Car tidak seharusnya mengimplementasikan method-method yang ada di Product.
 - I (Interface Segregation Principle): membuat interface untuk repository dan juga menggunakan interface bawaan untuk service. Sehingga mencegah class untuk bergantung pada method yang tidak akan mereka pakai.
-- D (Dependency Inversion Principle): 
+- D (Dependency Inversion Principle): membuat CarService, ProductService, dan CarController menggunakan interface yang sudah dibuat agar modul tingkat tinggi bergantung dengan interfacenya bukan class konkretnya. 
 
 *Extra (Clean Code):*
 - DRY (Don't Repeat Yourself): saya menghapus loop pada method update di CarRepository karena mengeloop lagi untuk mencari id Car padahal kita sudah memiliki function tersendiri untuk itu.
 - YAGNI (You Aren't Gonna Need It): saya menghapus atribut static int id pada CarRepository karena tampaknya kita tidak menggunakan id berupa angka tapi berupa UUID. karena tidak digunakan sama sekali maka saya hapus.
 
 **Explain the advantages of applying SOLID principles to your project with examples.**
-- lorem ipsum
+- pertama adalah fleksibiltasnya. di productRepository, jika suatu saat saya harus menggunakan database, saya hanya perlu membuat class baru yang mengimplementasikan interface tersebut rather than ubah-ubah file service lagi. Kedua, mudah dicari bugnya. Karena kita sudah memisahkan file-file berdasarkan tugasnya masing-masing. misal ada bug pada halaman list Car, saya langsung tahu bugnya antara di CarController atau di CarService sehingga tidak perlu lagi capek-capek cari di productController (jika masih menggunakan yang lama). Ketiga adalah code bisa lebih aman dan predictable karena saya sudah menghapus inheritance antara CarController dan ProductController. Saya menghindari resiko dimana method milik product tidak sengaja terpanggil ketika saya ingin mengimplementasikan delete pada Car.
 
 **Explain the disadvantages of not applying SOLID principles to your project with examples.**
-- lorem ipsum
+- Pertama, code menjadi kaku karena CarServiceImpl sangat bergantung dengan repositorynya maka setiap nanti ada perubahan cara penyimpanan datanya, saya terpaksa harus merombak ulang code dalam service sehingga menimbulkan resiko muncul error lebih tinggi lagi. Kedua, Code akan susah untuk dibaca oleh developer lain jika suatu saat project ini ingin dikerjakan berkelompok karena code ditumpuk jadi 1 (melanggar SRP). Selain itu juga unit testnya akan sulit dibuat karena codenya sangat menumpuk.
