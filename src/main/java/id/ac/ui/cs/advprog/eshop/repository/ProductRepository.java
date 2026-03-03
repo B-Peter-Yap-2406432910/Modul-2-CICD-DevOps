@@ -6,15 +6,11 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class ProductRepository {
+public class ProductRepository implements ProductRepositoryIntr{
     private List<Product> productData = new ArrayList<>();
     private HashMap<String,Product> productHashMap = new HashMap<>();
 
     public Product create(Product product){
-        if (product.getProductId() == null){
-            String productid = UUID.randomUUID().toString();
-            product.setProductId(productid);
-        }
         productData.add(product);
         productHashMap.put(product.getProductId(), product);
         return product;
