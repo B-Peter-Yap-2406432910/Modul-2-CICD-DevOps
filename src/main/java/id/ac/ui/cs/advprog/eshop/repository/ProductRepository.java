@@ -11,10 +11,6 @@ public class ProductRepository {
     private HashMap<String,Product> productHashMap = new HashMap<>();
 
     public Product create(Product product){
-        if (product.getProductId() == null){
-            String productid = UUID.randomUUID().toString();
-            product.setProductId(productid);
-        }
         productData.add(product);
         productHashMap.put(product.getProductId(), product);
         return product;

@@ -38,3 +38,21 @@ implementation has met the definition of Continuous Integration and Continuous
 Deployment? Explain the reasons (minimum 3 sentences)!**
 - Menurut saya sudah memenuhi. Dari segi CI, sudah terpenuhi dengan pengaplikasian `ci.yml` dan `scorecard.yml`. Mereka akan mencoba compile (ci.yml), mengeksekusi test-test yang sudah dibuat (ci.yml), memeriksa code quality (ci.yml), lalu mengecek keamanan (scorecard.yml) dari code saya ketika saya melakukan push atau PR (Pull Request). Ketiga workflow itu memastikan bahwa code yang saya submit selalu terintegrasi dengan baik dan bebas dari error sebelum dimerge ke main.
 Dari segi CD, kriteria ini sudah terpenuhi juga karena `deploy.yml`. workflow ini akan dijalankan hanya ketika kita ingin mengepush/commit ke main dimana untuk auto-deploy app kita sehingga kita tidak perlu deploy manual lagi.
+
+# Module 3
+# Refleksi
+
+**Explain what principles you apply to your project!**
+- S (Single Responsibility Principle): Memindahkan CarController ke file khusus untuk class itu sendiri untuk mengimplementasikan SRP. dimana 1 file atau class khusus untuk controller masing-masing aspek saja.
+Lalu untuk pemasukan UUID juga saya pindahkan ke service rather than di repository karena tugas repository adalah hanya untuk menyimpan CRUD bukan untuk business logic. Saya juga mengubah edit pada  
+- O (Open-Close Principle): 
+
+
+*Extra (Clean Code):*
+- DRY (Don't Repeat Yourself): saya menghapus loop pada method update di CarRepository karena mengeloop lagi untuk mencari id Car padahal kita sudah memiliki function tersendiri untuk itu.
+
+**Explain the advantages of applying SOLID principles to your project with examples.**
+- lorem ipsum
+
+**Explain the disadvantages of not applying SOLID principles to your project with examples.**
+- lorem ipsum
